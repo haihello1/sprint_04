@@ -47,10 +47,10 @@ final class MovieQuizViewController: UIViewController {
                 correctAnswer: false)
         ]
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        let questionStep = QuizStepViewModel( // 1
-            image: UIImage(named: model.image) ?? UIImage(), // 2
+        let questionStep = QuizStepViewModel(
+            image: UIImage(named: model.image) ?? UIImage(),
             question: model.text, // 3
-            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)") // 4
+            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
         return questionStep
     }
     
@@ -84,12 +84,12 @@ final class MovieQuizViewController: UIViewController {
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questions.count - 1 {
-            let text = "Ваш результат: \(correctAnswers)/10" // 1
-            let viewModel = QuizResultsViewModel( // 2
+            let text = "Ваш результат: \(correctAnswers)/10"
+            let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
                 text: text,
                 buttonText: "Сыграть ещё раз")
-            show(quiz: viewModel) // 3
+            show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
             let nextQuestion = questions[currentQuestionIndex]
@@ -142,37 +142,33 @@ final class MovieQuizViewController: UIViewController {
     }
     
     @IBAction private func noButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex] // 1
-        let givenAnswer = false // 2
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = false
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
     @IBAction private func yesButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex] // 1
-        let givenAnswer = true // 2
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = true
         
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer) // 3
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
 
     }
 }
 
 struct QuizQuestion {
-  // строка с названием фильма,
-  // совпадает с названием картинки афиши фильма в Assets
   let image: String
-  // строка с вопросом о рейтинге фильма
   let text: String
-  // булевое значение (true, false), правильный ответ на вопрос
   let correctAnswer: Bool
 }
+
 struct QuizStepViewModel {
   let image: UIImage
   let question: String
   let questionNumber: String
 }
 
-// для состояния "Результат квиза"
 struct QuizResultsViewModel {
   let title: String
   let text: String

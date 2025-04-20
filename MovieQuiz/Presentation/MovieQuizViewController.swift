@@ -46,10 +46,11 @@ final class MovieQuizViewController: UIViewController {
                 text: "Рейтинг этого фильма больше чем 6?",
                 correctAnswer: false)
         ]
+    
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
-            question: model.text, // 3
+            question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
         return questionStep
     }
@@ -58,6 +59,9 @@ final class MovieQuizViewController: UIViewController {
         cinemaImage.image = step.image
         questionLabel.text = step.question
         indexLabel.text = step.questionNumber
+        
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
     }
     
     private func show(quiz result: QuizResultsViewModel) {
@@ -75,9 +79,7 @@ final class MovieQuizViewController: UIViewController {
             self.show(quiz: viewModel)
         }
         
-        
         alert.addAction(action)
-
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -100,9 +102,12 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showAnswerResult(isCorrect: Bool) {
-        cinemaImage.layer.masksToBounds = true // 1
-        cinemaImage.layer.borderWidth = 8 // 2
-        cinemaImage.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor // 3
+        cinemaImage.layer.masksToBounds = true
+        cinemaImage.layer.borderWidth = 8
+        cinemaImage.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
         
         if isCorrect {
             correctAnswers += 1
@@ -128,17 +133,19 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        questionLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
-        indexLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
+//        questionTitleLabel.font = UIFont(name: "YSDisplay-Medium", size: 23)
+//        indexLabel.font = UIFont(name: "YSDisplay-Medium", size: 23)
 
         cinemaImage.layer.cornerRadius = 20
         cinemaImage.image = UIImage(named: questions[0].image)
+        
+        questionLabel.text = questions[0].text
 
         noButton.layer.cornerRadius = 15
-        noButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 24)
-        
+//        noButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 23)
+//
         yesButton.layer.cornerRadius = 15
-        yesButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 23)
+//        yesButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 23)
     }
     
     @IBAction private func noButtonClicked(_ sender: Any) {

@@ -15,7 +15,7 @@ final class AlertPresenter {
         self.viewController = viewController
     }
 
-    func showAlert(model: AlertModel) {
+    func presentAlert(model: AlertModel) {
         let alert = UIAlertController(title: model.title,
                                       message: model.message,
                                       preferredStyle: .alert)

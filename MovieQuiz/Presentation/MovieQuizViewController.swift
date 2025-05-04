@@ -9,6 +9,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var alertPresenter: AlertPresenter?
     private var currentQuestion: QuizQuestion?
     
+    // Делает из вопроса, выдаваемого фабрикой, вопрос для показа на экране
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -17,6 +18,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         return questionStep
     }
     
+    // Берет вопрос, меняет на экране изображение, вопрос, номер вопроса
     private func show(quiz step: QuizStepViewModel) {
         cinemaImage.image = step.image
         questionLabel.text = step.question
@@ -26,7 +28,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         noButton.isEnabled = true
     }
     
-    func show(quiz result: QuizResultsViewModel) {
+    // Формирует модеоль AlertModel, отправляет в AlertPresenter для показа алерта
+    func makeAlert(quiz result: QuizResultsViewModel) {
         let model = AlertModel(
             title: result.title,
             message: result.text,
@@ -37,26 +40,31 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self?.questionFactory?.requestNextQuestion()
             }
         )
-        alertPresenter?.showAlert(model: model)
+        alertPresenter?.presentAlert(model: model)
     }
     
+    // Если последний вопрос - вызывает makeAlert
+    // Если не последний - увеличивает счетчик, запрашивает новый вопрос
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
             let text = correctAnswers == questionsAmount ?
                     "Поздравляем, вы ответили на 10 из 10!" :
                     "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            let viewModel = QuizResultsViewModel(
-                title: "Этот раунд окончен!",
-                text: text,
-                buttonText: "Сыграть ещё раз")
-            show(quiz: viewModel)
+            makeAlert(
+                quiz: QuizResultsViewModel(
+                    title: "Этот раунд окончен!",
+                    text: text,
+                    buttonText: "Сыграть ещё раз"
+                )
+            )
         } else {
             currentQuestionIndex += 1
             self.questionFactory?.requestNextQuestion()
         }
     }
     
-    // higher mst
+    // Создает обводку, блокирует кнопки, проверяет правильность
+    // Вызывает следующий вопрос
     private func showAnswerResult(isCorrect: Bool) {
         cinemaImage.layer.masksToBounds = true
         cinemaImage.layer.borderWidth = 8
@@ -88,20 +96,23 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var yesButton: UIButton!
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let questionFactory = QuestionFactory()
         questionFactory.setup(delegate: self)
         self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion() // Запрос первого вопроса
+        questionFactory.requestNextQuestion()
 
         alertPresenter = AlertPresenter(viewController: self)
         
-        cinemaImage.layer.cornerRadius = 20
+        print(Bundle.main.bundlePath)
+        print(NSHomeDirectory())
+        UserDefaults.standard.set(true, forKey: "viewDidLoad")
         
+        cinemaImage.layer.cornerRadius = 20
         noButton.layer.cornerRadius = 15
-
         yesButton.layer.cornerRadius = 15
     }
 
@@ -123,7 +134,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     // MARK: - QuestionFactoryDelegate
-
+    // Принимает вопрос от генератора, обновляет их в главном потоке
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
@@ -136,4 +147,5 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self?.show(quiz: viewModel)
         }
     }
+    
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51916842DCA588D00B0B03A /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51916832DCA588D00B0B03A /* StatisticService.swift */; };
+		A52C2B052DC849FF004FE8A4 /* StatisticServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C2B042DC849FF004FE8A4 /* StatisticServiceProtocol.swift */; };
+		A52C2B072DC84D16004FE8A4 /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C2B062DC84D16004FE8A4 /* GameResult.swift */; };
 		A5A005052DAEE59A00124F9C /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A005042DAEE59A00124F9C /* YS Display-Medium.ttf */; };
 		A5A005062DAEE59A00124F9C /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A005032DAEE59A00124F9C /* YS Display-Bold.ttf */; };
 		A5F4FA812DC549180084C23A /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F4FA802DC549180084C23A /* QuestionFactory.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A51916832DCA588D00B0B03A /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
+		A52C2B042DC849FF004FE8A4 /* StatisticServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticServiceProtocol.swift; sourceTree = "<group>"; };
+		A52C2B062DC84D16004FE8A4 /* GameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
 		A5A005032DAEE59A00124F9C /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		A5A005042DAEE59A00124F9C /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		A5F4FA802DC549180084C23A /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
@@ -88,9 +94,11 @@
 		A5F4FA7F2DC548700084C23A /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				A51916832DCA588D00B0B03A /* StatisticService.swift */,
 				A5F4FA802DC549180084C23A /* QuestionFactory.swift */,
 				A5F4FA8E2DC572C30084C23A /* QuestionFactoryProtocol.swift */,
 				A5F4FA902DC613C30084C23A /* QuestionFactoryDelegate.swift */,
+				A52C2B042DC849FF004FE8A4 /* StatisticServiceProtocol.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -102,6 +110,7 @@
 				A5F4FA882DC54E2F0084C23A /* QuizResultsViewModel.swift */,
 				A5F4FA8A2DC54E420084C23A /* QuizQuestion.swift */,
 				A5F4FA8C2DC54F100084C23A /* QuizStepViewModel.swift */,
+				A52C2B062DC84D16004FE8A4 /* GameResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,16 +233,19 @@
 				A5F4FA952DC6D53A0084C23A /* AlertPresenter.swift in Sources */,
 				A5F4FA932DC6D49E0084C23A /* AlertModel.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
+				A52C2B072DC84D16004FE8A4 /* GameResult.swift in Sources */,
 				A5F4FA8F2DC572C30084C23A /* QuestionFactoryProtocol.swift in Sources */,
 				A5F4FA912DC613C30084C23A /* QuestionFactoryDelegate.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
 				A5F4FA8D2DC54F100084C23A /* QuizStepViewModel.swift in Sources */,
 				A5F4FA8B2DC54E420084C23A /* QuizQuestion.swift in Sources */,
+				A52C2B052DC849FF004FE8A4 /* StatisticServiceProtocol.swift in Sources */,
 				A5F4FA812DC549180084C23A /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
 				A5F4FA892DC54E2F0084C23A /* QuizResultsViewModel.swift in Sources */,
 				AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */,
+				A51916842DCA588D00B0B03A /* StatisticService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

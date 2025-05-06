@@ -134,7 +134,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     // MARK: - QuestionFactoryDelegate
-    // Принимает вопрос от генератора, обновляет их в главном потоке
+    
+    // Принимает вопрос от генератора, обновляет UI в главном потоке
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return

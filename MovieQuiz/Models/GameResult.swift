@@ -8,7 +8,8 @@
 import Foundation
 
 // Результат игры, формируется в конце каждой игры
-struct GameResult: Codable {
+struct GameResult: Codable, CustomStringConvertible {
+    
     let correctAnswersNumber: Int
     let questionsNumber: Int
     let currentDate: Date
@@ -16,5 +17,9 @@ struct GameResult: Codable {
     // метод сравнения по количеству верных ответов
     func isBetterThan(_ another: GameResult) -> Bool {
         correctAnswersNumber > another.correctAnswersNumber
+    }
+    
+    var description: String {
+        return "\(correctAnswersNumber)/\(questionsNumber), (\(currentDate.dateTimeString))"
     }
 }

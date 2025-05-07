@@ -5,9 +5,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     private let questionsAmount: Int = 10
+    private var currentQuestion: QuizQuestion?
+
     private var questionFactory: QuestionFactoryProtocol?
     private var alertPresenter: AlertPresenter?
-    private var currentQuestion: QuizQuestion?
+    private var statisticService: StatisticServiceProtocol?
     
     // Делает из вопроса, выдаваемого фабрикой, вопрос для показа на экране
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -47,9 +49,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // Если не последний - увеличивает счетчик, запрашивает новый вопрос
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = correctAnswers == questionsAmount ?
-                    "Поздравляем, вы ответили на 10 из 10!" :
-                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            guard let statisticService = statisticService else { return }
+            let result = GameResult(correctAnswersNumber: correctAnswers, questionsNumber: questionsAmount, currentDate: Date())
+            statisticService.store(result: result)
+            let text: String =
+                """
+                Ваш результат \(correctAnswers)/\(questionsAmount)
+                Количество сыгранных квизов: \(statisticService.totalGamesNumber)
+                Рекорд: \(statisticService.bestGame)
+                Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy * 100)) %
+                """
             makeAlert(
                 quiz: QuizResultsViewModel(
                     title: "Этот раунд окончен!",
@@ -77,7 +86,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             correctAnswers += 1
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() /*+ 1.0*/) { [weak self] in
             guard let self = self else { return }
             
             self.cinemaImage.layer.borderWidth = 0
@@ -100,16 +109,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let questionFactory = QuestionFactory()
-        questionFactory.setup(delegate: self)
-        self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion()
-
+        questionFactory = QuestionFactory(delegate: self)
+        questionFactory?.requestNextQuestion()
+        
         alertPresenter = AlertPresenter(viewController: self)
         
-        print(Bundle.main.bundlePath)
-        print(NSHomeDirectory())
-        UserDefaults.standard.set(true, forKey: "viewDidLoad")
+        statisticService = StatisticService()
         
         cinemaImage.layer.cornerRadius = 20
         noButton.layer.cornerRadius = 15

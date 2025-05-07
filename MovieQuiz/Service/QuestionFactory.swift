@@ -10,7 +10,7 @@ import Foundation
 class QuestionFactory: QuestionFactoryProtocol {
     weak var delegate: QuestionFactoryDelegate?
 
-    func setup(delegate: QuestionFactoryDelegate) {
+    init (delegate: QuestionFactoryDelegate? = nil) {
         self.delegate = delegate
     }
     

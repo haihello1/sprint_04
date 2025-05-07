@@ -86,7 +86,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             correctAnswers += 1
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() /*+ 1.0*/) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             
             self.cinemaImage.layer.borderWidth = 0

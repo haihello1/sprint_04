@@ -44,8 +44,6 @@ final class StatisticService: StatisticServiceProtocol {
     }
     
     var totalAccuracy: Double {
-        let totalCorrectAnswersNumber = userDefaults.integer(forKey: Keys.totalCorrectAnswersNumber)
-        let totalQuestionsNumber = userDefaults.integer(forKey: Keys.totalQuestionsNumber)
         if totalQuestionsNumber == 0 { return 0.0 }
         return Double(totalCorrectAnswersNumber) / Double(totalQuestionsNumber)
     }
